@@ -9,6 +9,10 @@
 
 Issue tracker de ingeniería **standalone** con triaje guiado por teclado (`C`, `/`, `J`, `K`, `Esc`, `Ctrl/Cmd+K`), **Focus Mode Pomodoro** acoplado por issue y **generación determinista de Release Notes** en Markdown.
 
+## Qué hace este proyecto
+
+**PulseIssues** es un gestor de tareas e incidencias para equipos de desarrollo inspirado en Linear. Permite crear, priorizar, etiquetar y filtrar issues guardando los filtros en la URL, navegar todo rápidamente con atajos de teclado, activar un temporizador Pomodoro vinculado a una tarea específica y generar automáticamente notas de lanzamiento (*Release Notes*) en Markdown a partir de los issues completados.
+
 - **Demo en 1 clic**: [`/demo`](/demo) redirige directo al workspace sembrado (`/workspace`) con el proyecto `ENG` (**Pulse Core Platform**), 6 etiquetas N:M y **16 issues (`ENG-101` a `ENG-116`)**.
 - **Documentación API interactiva**: [`/api/docs`](/api/docs) (Scalar UI) y [`/api/openapi.json`](/api/openapi.json) (OpenAPI 3.1.0).
 
