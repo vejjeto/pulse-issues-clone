@@ -1,5 +1,5 @@
+import { FooterDisclaimer } from "@/components/FooterDisclaimer";
 import { Providers } from "@/components/Providers";
-import { PORTFOLIO_DISCLAIMER } from "@/lib/constants";
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import "./globals.css";
@@ -33,7 +33,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <Providers>
           <div className="flex-1 flex flex-col">{children}</div>
           <footer className="border-t border-zinc-200 dark:border-zinc-800/80 bg-white/70 dark:bg-[#0d0f14]/90 px-4 py-3 text-center text-xs text-zinc-500 dark:text-zinc-400">
-            {PORTFOLIO_DISCLAIMER}
+            <FooterDisclaimer />
           </footer>
         </Providers>
       </body>

@@ -1,6 +1,7 @@
 "use client";
 
 import { HealthBadge } from "@/components/HealthBadge";
+import { LanguageToggle } from "@/components/LanguageToggle";
 import {
   PriorityIcon,
   StatusIcon,
@@ -34,6 +35,7 @@ import {
   parseFiltersFromSearchParams,
   serializeFiltersToQueryString,
 } from "@/lib/filters";
+import { useLocale } from "@/lib/i18n";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   AlertTriangle,
@@ -110,6 +112,7 @@ export function WorkspaceClient({
   const searchInputRef = useRef<HTMLInputElement>(null);
   const queryClient = useQueryClient();
   const { pushToast } = useToast();
+  const { t } = useLocale();
 
   const filters = useMemo(
     () => parseFiltersFromSearchParams(searchParams),
@@ -714,15 +717,16 @@ export function WorkspaceClient({
                 <Menu className="h-4 w-4" aria-hidden="true" />
               </button>
               <h1 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">
-                Workspace de Triaje
+                {t.workspace.title}
               </h1>
               <span className="hidden sm:inline-block rounded-full bg-zinc-100 dark:bg-zinc-800 px-2 py-0.5 font-mono text-[11px] text-zinc-600 dark:text-zinc-400">
-                {visibleIssues.length} visibles
+                {visibleIssues.length} {t.workspace.visibleCount}
               </span>
             </div>
 
             <div className="flex flex-wrap items-center gap-2">
               <HealthBadge />
+              <LanguageToggle />
               <ThemeToggle />
               <button
                 type="button"
@@ -733,7 +737,7 @@ export function WorkspaceClient({
                   className="h-3.5 w-3.5 text-violet-500"
                   aria-hidden="true"
                 />
-                <span>Generar Release Notes</span>
+                <span>{t.workspace.releaseNotes}</span>
               </button>
               <button
                 type="button"
@@ -741,7 +745,7 @@ export function WorkspaceClient({
                 className="inline-flex items-center gap-1.5 rounded-md bg-indigo-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-indigo-500"
               >
                 <Plus className="h-3.5 w-3.5" aria-hidden="true" />
-                <span>Nuevo Issue</span>
+                <span>{t.workspace.newIssue}</span>
               </button>
             </div>
           </div>
@@ -758,7 +762,7 @@ export function WorkspaceClient({
                 aria-label="Buscar issues por título, identificador o descripción"
                 value={searchDraft}
                 onChange={(e) => handleSearchChange(e.target.value)}
-                placeholder="Buscar issues (atajo / )..."
+                placeholder={t.workspace.searchPlaceholder}
                 className="w-full rounded-md border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 pl-8 pr-3 py-1.5 text-xs text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 focus:border-indigo-500 focus:outline-none"
               />
             </div>
@@ -776,7 +780,7 @@ export function WorkspaceClient({
               }
               className="rounded-md border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 px-2.5 py-1.5 text-xs text-zinc-800 dark:text-zinc-200"
             >
-              <option value="">Estado: Todos</option>
+              <option value="">{t.workspace.allStatuses}</option>
               {ISSUE_STATUSES.map((status) => (
                 <option key={status} value={status}>
                   {status}
@@ -797,7 +801,7 @@ export function WorkspaceClient({
               }
               className="rounded-md border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 px-2.5 py-1.5 text-xs text-zinc-800 dark:text-zinc-200"
             >
-              <option value="">Prioridad: Todas</option>
+              <option value="">{t.workspace.allPriorities}</option>
               {ISSUE_PRIORITIES.map((priority) => (
                 <option key={priority} value={priority}>
                   {priority}
@@ -816,7 +820,7 @@ export function WorkspaceClient({
               }
               className="rounded-md border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 px-2.5 py-1.5 text-xs text-zinc-800 dark:text-zinc-200"
             >
-              <option value="">Tipo: Todos</option>
+              <option value="">{t.workspace.allTypes}</option>
               {ISSUE_TYPES.map((type) => (
                 <option key={type} value={type}>
                   {TYPE_META[type].label}
@@ -835,7 +839,7 @@ export function WorkspaceClient({
               }
               className="rounded-md border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 px-2.5 py-1.5 text-xs text-zinc-800 dark:text-zinc-200"
             >
-              <option value="">Etiqueta: Todas</option>
+              <option value="">{t.workspace.allLabels}</option>
               {labels.map((label) => (
                 <option key={label.id} value={label.name}>
                   {label.name}
@@ -877,7 +881,7 @@ export function WorkspaceClient({
                 className="inline-flex items-center gap-1 rounded-md border border-zinc-300 dark:border-zinc-700 px-2.5 py-1.5 text-xs font-medium text-zinc-600 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800"
               >
                 <FilterX className="h-3.5 w-3.5" aria-hidden="true" />
-                <span>Limpiar filtros</span>
+                <span>{t.workspace.clearFilters}</span>
               </button>
             )}
           </div>
@@ -920,11 +924,10 @@ export function WorkspaceClient({
                 aria-hidden="true"
               />
               <h2 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">
-                No hay issues que coincidan con los filtros
+                {t.workspace.emptyTitle}
               </h2>
               <p className="mt-1 text-xs text-zinc-500 dark:text-zinc-400">
-                Prueba ajustando la búsqueda o limpia los filtros activos para
-                ver todo el backlog.
+                {t.workspace.emptySubtitle}
               </p>
               {filtersActive && (
                 <button
@@ -932,7 +935,7 @@ export function WorkspaceClient({
                   onClick={clearAllFilters}
                   className="mt-4 inline-flex items-center gap-1.5 rounded-md bg-indigo-600 px-3.5 py-1.5 text-xs font-semibold text-white hover:bg-indigo-500"
                 >
-                  <span>Limpiar filtros</span>
+                  <span>{t.workspace.clearFilters}</span>
                 </button>
               )}
             </div>

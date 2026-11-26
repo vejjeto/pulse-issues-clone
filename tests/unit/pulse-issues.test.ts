@@ -20,6 +20,7 @@ import {
   parseFiltersFromSearchParams,
   serializeFiltersToQueryString,
 } from "@/lib/filters";
+import { TRANSLATIONS } from "@/lib/i18n";
 import {
   createIssue,
   deleteIssue,
@@ -553,5 +554,34 @@ describe("Contratos standalone: env.ts, /api/health, RFC 7807 y OpenAPI", () => 
     const body = (await patchRes.json()) as { issue: IssueWithLabels };
     expect(body.issue.status).toBe("Done");
     expect(body.issue.completedAt).toBeTruthy();
+  });
+});
+
+describe("Diccionario i18n es/en", () => {
+  it("mantiene paridad exacta de claves y textos no vacíos entre es y en", () => {
+    const esSections = Object.keys(TRANSLATIONS.es).sort();
+    const enSections = Object.keys(TRANSLATIONS.en).sort();
+    expect(esSections).toEqual(enSections);
+
+    for (const section of esSections as Array<keyof typeof TRANSLATIONS.es>) {
+      const esKeys = Object.keys(TRANSLATIONS.es[section]).sort();
+      const enKeys = Object.keys(TRANSLATIONS.en[section]).sort();
+      expect(esKeys).toEqual(enKeys);
+
+      for (const key of esKeys) {
+        const esVal =
+          TRANSLATIONS.es[section][
+            key as keyof (typeof TRANSLATIONS.es)[typeof section]
+          ];
+        const enVal =
+          TRANSLATIONS.en[section][
+            key as keyof (typeof TRANSLATIONS.en)[typeof section]
+          ];
+        expect(typeof esVal).toBe("string");
+        expect(typeof enVal).toBe("string");
+        expect(String(esVal).trim().length).toBeGreaterThan(0);
+        expect(String(enVal).trim().length).toBeGreaterThan(0);
+      }
+    }
   });
 });
