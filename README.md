@@ -1,6 +1,6 @@
 # PulseIssues
 
-[![CI](https://github.com/diego/pulse-issues-clone/actions/workflows/ci.yml/badge.svg)](./.github/workflows/ci.yml)
+[![CI](https://github.com/vejjeto/pulse-issues-clone/actions/workflows/ci.yml/badge.svg)](./.github/workflows/ci.yml)
 ![Next.js 15](https://img.shields.io/badge/Next.js-15-black?logo=next.js)
 ![TypeScript Strict](https://img.shields.io/badge/TypeScript-Strict-3178C6?logo=typescript)
 ![SQLite + Drizzle](https://img.shields.io/badge/SQLite-node%3Asqlite%20%2B%20Drizzle-003B57?logo=sqlite)
